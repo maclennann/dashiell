@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: Tahoma, Geneva, sans-serif;
+}
+div {
+    display: inline;
+}
+</style>
+<script>
+var host = window.document.location.host.replace(/:.*/, '');
+var ws = new WebSocket('ws://' + host + ':8080');
+ws.onmessage = function (event) {
+    console.log(event.data);
+};
+</script>
+</head>
+<body>
+    <button id="send">send</button>
+
+    <script>
+    document.getElementById("send").addEventListener("click",function(){
+        ws.send("hostname");
+    });
+    </script>
+</body>
+</html>

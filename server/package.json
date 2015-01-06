@@ -1,0 +1,16 @@
+{
+  "name": "websocket-server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~2.3.11",
+    "socket.io": "~1.2.1",
+    "ws": "~0.6.4"
+  }
+}
