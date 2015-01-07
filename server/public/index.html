@@ -15,14 +15,28 @@ var ws = new WebSocket('ws://' + host + ':8080');
 ws.onmessage = function (event) {
     console.log(event.data);
 };
+
+ws.onopen = function(event){
+    ws.send("{\"action\": \"register_client\", \"payload\": \"1\"}");
+}
+
 </script>
 </head>
 <body>
-    <button id="send">send</button>
+    <input id='query' type='text'></input><button id="squery">query</button>
+    <input id='fact' type='text'></input><button id="sfact">fact</button>
+
 
     <script>
-    document.getElementById("send").addEventListener("click",function(){
-        ws.send("hostname");
+
+    document.getElementById("squery").addEventListener("click",function(){
+        var query = document.getElementById("query").value;
+        ws.send("{ \"action\": \"query\", \"payload\": \""+query+"\"}");
+    });
+
+    document.getElementById("sfact").addEventListener("click",function(){
+        var fact = document.getElementById("fact").value;
+        ws.send("{ \"action\": \"fact\", \"payload\": \""+fact+"\"}");
     });
     </script>
 </body>

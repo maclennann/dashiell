@@ -1,3 +1,6 @@
-**/node_modules/
-**/third-party/websocketpp
+**/node_modules
+**/third-party
 **/build
+**/tables
+**/.idea
+**/cmake
