@@ -1,40 +1,105 @@
-C++/Node websockets communication demo.
+### What is this?
 
-This requires a bit of manual setup right now and doesn't do too much, but I wanted to get it on the
-ol' githubs so I can continue to work on it when I'm not at my desktop.
+A barely-working (proof-of)-proof-of-concept of plugging [cfacter](http://github.com/puppetlabs/cfacter) 
+and [osquery](http://osquery.io) into websockets, so you can query your servers for facts or osquery 
+tables from the comfort of your web browser.
 
-Basically, it's a websocket server running on node (also hosting an html page that acts as a web client) and a client written in c++.
+Eventually, I'd like to turn this into a lightweight inventory management for a fleet of servers (e.g. are any of my servers running vulnerable versions of openssl?)
 
-In order to give the c++ client something interesting to do, I decided to use cfacter.
+Right now, it kind of works.
 
-This requires a bit of manual setup. Download teh websocketpp headers into client/third-party.
+Biiiiiig disclaimer, I am by no means a C++ developer - I just managed to fumble my way through this. 
+Though the code makes me look worse than I am, since I was trying to learn everything all at once, 
+code quality suffered.
 
-Make and install cfacter into the default /usr/local.
+If you want to try it out, I basically dumped all of my actions into a step-by-step below. I'm going to 
+pare down the steps to only do necessarily things and script out all of the bootstrapping eventually, 
+but I literally just got the working and needed to tell the world.
 
-TODO:
+### What I'm looking for:
 
-make setup easier.
-make it do something interesting.
-fix spelling errors.
-actual instructions for compiling the c++
-a blog post or two about how it works (once it works)
+* Actual C++ devs!
+    * I have no idea what I'm doing.
+    * I know the language well enough, but the whole library and cmake and all that stuff is foreign to me
+    * Especially helpful would be someone to tell me if there is an easier way to make use of osquery tables 
+that isn't compiling them into dashiell.
 
+* Javascript devs
+    * I'm pretty good with javascript, but I don't want to exclude anyone.
 
-How do I make this work (roughly):
+* Ideas
+    * I have a general idea of where I'll be going, but I'm open to suggestions
 
-* Download `websocketpp` headers into client/third-party
-* Build and install `cfacter` into /usr/local (the default just follow their instructions)
-* Uhh...make sure you have node and cmake and some c++ build tools I guess I haven't enumerated them yet.
-* In one terminal: navigate to `./server/` and run `node index` there is no output but a process should be hogging stdout
-* In another terminal:
-    * navigate to `./client/` make a `build` directory, go in there
-    * run `cmake ..`
-    * assuming that worked, run `make`
-    * assuming that worked, run `magikarp`
+### How to try this (broadly): 
 
-The C++ client should successfully connect to your node server on port 8080. You should see "hostname" displayed on the server terminal.
+* download, build, install osquery and cfacter
+* copy some third-party dependencies to the expected directory
+* `cmake` and `make` dashiell client
 
-When the client gets its "hostname" message back it will get its hostname from facter and send it back. You should see your hostname (and some json around it)
-on the server terminal. Don't worry, the client only responds to "hostname" so no infinite loop.
+### How to make this do things (humanscript):
 
-Open a browser and go to `http://localhost:8080`. Click the button as many times as you want and watch the hostnames roll in to your server.
+* mkdir dashiell
+* cd dashiell
+* git clone https://github.com/facebook/osquery.git
+* mv osquery/Vagrantfile ./
+* on line 10 of the Vagrantfile, insert: `box.vm.network :private_network, ip: "192.168.56.100"`
+* vagrant up ubuntu14
+* vagrant ssh ubuntu14
+* cd /vagrant/osquery
+* sudo make deps
+* get and drink a coffee
+* make
+* get two beers. drink one.
+* come up with a name for your project, search github to ensure it isn't already taken
+* sudo make install
+* cross your fingers
+* cd ..
+* git clone https://github.com/puppetlabs/cfacter.git
+* cd cfacter
+* git submodule --init --recursive
+* sudo apt-get install build-essential cmake libssl-dev libyaml-cpp-dev libblkid-dev libcurl4-openssl-dev ruby-dev
+* mkdir release
+* cd release
+* cmake ..
+* make
+* drink the second beer.
+* if alcohol makes you sleepy, take a quick nap
+* sudo make install
+* cd /vagrant
+* git clone https://github.com/maclennann/dashiell.git
+* git clone https://github.com/zaphoyd/websocketpp.git
+* cp -r websocketpp/websocketpp dashiell/client/third-party
+* cp -r osquery/third-party/* dashiell/client/third-party/
+* cp -r osquery/osquery/ dashiell/client/third-party
+* cp -r osquery/build/ubuntu/generated/ dashiell/client/third-party/tables
+* cd dashiell/client
+* cmake .
+* make
+* the tedious part is over. take a moment to breathe.
+* sudo apt-get install npm
+* cd ../server
+* npm install
+* sudo ln -s /usr/bin/nodejs /usr/bin/node*
+
+* open a second terminal (either via tmux or vagrant sshing from another terminal)
+
+* (in one terminal)
+* cd /vagrant/dashiell/server
+* node index
+
+* (in another terminal)
+* cd /vagrant/dashiell/client
+* ./dashiell
+
+* in a web browser, go to `192.168.56.100:8080` (or if you're running locally, localhost:8080)
+
+* open the browser devtools
+
+* type `select * from deb_packages where name='bash'` into the first textbox
+* click `query`
+* watch the terminals to see the queries hitting the dashiell server and client
+* look at your browser devtools for the response
+
+* type `hostname` into the second textbox
+* click `fact`
+* again, watch for the results
