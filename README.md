@@ -16,6 +16,13 @@ If you want to try it out, I basically dumped all of my actions into a step-by-s
 pare down the steps to only do necessarily things and script out all of the bootstrapping eventually, 
 but I literally just got the working and needed to tell the world.
 
+#### Dashiell?
+
+You know, like [Dashiell Hammet](http://en.wikipedia.org/wiki/Dashiell_Hammett). Because it will help you investigate your 
+servers. And also because it looks and sounds a little bit like "da shell." Get it?
+
+Well...it's still early, I guess I could change the name.
+
 ### What I'm looking for:
 
 * Actual C++ devs!
