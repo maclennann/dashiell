@@ -18,21 +18,21 @@ wss.on('connection', function(ws) {
         console.log(message);
 
         var msg = JSON.parse(message);
-        if(msg.action === "register_server"){
-            servers.push({"hostname": msg.payload, "connection": ws});
-            console.log("registered server " + msg.payload);
+        if(msg.Action === "register_server"){
+            servers.push({"hostname": msg.Payload, "connection": ws});
+            console.log("registered server " + msg.Payload);
 
             return;
         }
 
-        if(msg.action === "register_client"){
-            clients.push({"id": msg.payload, "connection": ws});
+        if(msg.Action === "register_client"){
+            clients.push({"id": msg.Payload, "connection": ws});
             console.log("registered client");
 
             return;
         }
 
-        if(msg.action === "query" || msg.action === "fact"){
+        if(msg.Action === "query" || msg.Action === "fact"){
             servers.forEach(function(c){
                 c.connection.send(message);
             });
@@ -42,7 +42,7 @@ wss.on('connection', function(ws) {
             return;
         }
 
-        if(msg.action === "response"){
+        if(msg.Action === "response"){
             clients.forEach(function(c){
                 c.connection.send(message);
             });

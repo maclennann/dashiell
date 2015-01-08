@@ -17,7 +17,7 @@ ws.onmessage = function (event) {
 };
 
 ws.onopen = function(event){
-    ws.send("{\"action\": \"register_client\", \"payload\": \"1\"}");
+    ws.send("{\"Action\": \"register_client\", \"Payload\": \"1\"}");
 }
 
 </script>
@@ -31,12 +31,12 @@ ws.onopen = function(event){
 
     document.getElementById("squery").addEventListener("click",function(){
         var query = document.getElementById("query").value;
-        ws.send("{ \"action\": \"query\", \"payload\": \""+query+"\"}");
+        ws.send("{ \"Action\": \"query\", \"Payload\": \""+query+"\"}");
     });
 
     document.getElementById("sfact").addEventListener("click",function(){
         var fact = document.getElementById("fact").value;
-        ws.send("{ \"action\": \"fact\", \"payload\": \""+fact+"\"}");
+        ws.send("{ \"Action\": \"fact\", \"Payload\": \""+fact+"\"}");
     });
     </script>
 </body>

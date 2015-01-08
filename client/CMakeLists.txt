@@ -5,6 +5,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 set(SOURCE_FILES main.cpp
+    dashiell/message.cpp
+    dashiell/osquery_worker.cpp
+    dashiell/facter_worker.cpp
 
     third-party/tables/tables_utils/time.cpp
 
@@ -22,7 +25,7 @@ set(SOURCE_FILES main.cpp
 )
 
 add_executable(dashiell ${SOURCE_FILES})
-include_directories(AFTER ${CMAKE_SOURCE_DIR}/third-party /usr/local/includes)
+include_directories(AFTER ${CMAKE_SOURCE_DIR}/third-party /usr/local/includes ${CMAKE_SOURCE_DIR}/include)
 
 find_package(Boost COMPONENTS system thread random filesystem REQUIRED)
 find_package(Threads REQUIRED)
