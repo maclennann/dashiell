@@ -4,6 +4,10 @@ var WebSocketServer = require('ws').Server
 , app = express.createServer();
 
 app.use(express.static(__dirname + '/public'));
+app.get('/servers', function(req,res){
+    res.send(JSON.stringify(servers.map(function(e){return e["hostname"];})));
+});
+
 app.listen(8080);
 
 var servers = [];
