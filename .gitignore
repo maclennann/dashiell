@@ -8,3 +8,4 @@ client/CMakeFiles/
 client/MakeFile
 client/cmake_install.cmake
 client/Makefile
+.vagrant/

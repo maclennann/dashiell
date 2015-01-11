@@ -1,7 +1,5 @@
 #include <osquery/core.h>
-#include <osquery/core/virtual_table.h>
 #include <osquery/sql.h>
-#include <osquery/database.h>
 #include <boost/property_tree/json_parser.hpp>
 #include <osquery_worker.h>
 

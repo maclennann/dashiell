@@ -9,19 +9,19 @@ set(SOURCE_FILES main.cpp
     dashiell/osquery_worker.cpp
     dashiell/facter_worker.cpp
 
-    third-party/tables/tables_utils/time.cpp
+    third-party/osquery-source/build/ubuntu/generated/tables_utils/time.cpp
 
     third-party/osquery/tables/system/linux/apt_sources.cpp
-    third-party/tables/tables_additional/apt_sources.cpp
+    third-party/osquery-source/build/ubuntu/generated/tables_additional/apt_sources.cpp
 
     third-party/osquery/tables/system/linux/deb_packages.cpp
-    third-party/tables/tables_additional/deb_packages.cpp
+    third-party/osquery-source/build/ubuntu/generated/tables_additional/deb_packages.cpp
 
     third-party/osquery/tables/system/linux/users.cpp
-    third-party/tables/tables_additional/users.cpp
+    third-party/osquery-source/build/ubuntu/generated/tables_additional/users.cpp
 
     third-party/osquery/tables/system/linux/processes.cpp
-    third-party/tables/tables_additional/processes.cpp
+    third-party/osquery-source/build/ubuntu/generated/tables_additional/processes.cpp
 )
 
 add_executable(dashiell ${SOURCE_FILES})

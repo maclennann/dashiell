@@ -6,7 +6,7 @@ dashiell.queryRunner = function(text) {
 
     // Post the query!
     var resp = $.ajax({
-        url: "http://localhost:8080/query",
+        url: "/query",
         contentType: 'application/json',
         dataType: 'json',
         type: "POST",
@@ -30,7 +30,7 @@ dashiell.queryResults = function(guid){
     setTimeout(function(){
         console.log("checking status!");
         var final = $.ajax({
-            url: "http://localhost:8080/query/"+guid,
+            url: "/query/"+guid,
             contentType: 'application/json',
             dataType: 'json',
             type: "GET"
