@@ -5,76 +5,61 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.rawgit.com/maclennann/jquery-simplevalidator/ea06b7a8b939173722808021d12a05aa6dbc9404/jquery-simplevalidator.js"></script>
+
+<link href="css/site.css" rel="stylesheet">
+<script src="js/site.js"></script>
 </head>
-<body style="margin-left:20px">
-    <h3>Demo 1</h3>
-    <input id="input" type="text" value="select * from deb_packages where name='bash'" />
-    <input type="radio" name="qtype" id="query" value="query" checked="checked"/>Query
-    <input type="radio" name="qtype" id="fact" value="fact"/>Fact
-    <button id="action" type="submit">do it? </button>
-    <br/>
-    <span id="output"></span>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="margin-left:20px">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="images/dashiell.png" height=50px style="float:left;margin-top:-14px"/>&nbsp;&nbsp;Dashiell</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+
+            </div>
+        </div>
+    </nav>
+
+
+
+    <section id="demo" style="margin-top:50px">
+        <div class=container>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Run a Query</h3>
+                    Query: <input id="input" type="text" value="select name, version from deb_packages where name='bash'" style="width:500px" /><br/>
+                    Query Type: <input type="radio" name="qtype" id="query" value="query" checked="checked"/>OsQuery
+                    <input type="radio" name="qtype" id="fact" value="fact"/>Fact<br/>
+                    <button id="action" type="submit">Run Query </button>
+                </div>
+                <div class="col-lg-6" style="margin-top:50px">
+                    <span id="output"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
 
     <script type="text/javascript">
     $(function() {
-        var queryRunner = function(text) {
-            var action = $('input[name=qtype]:checked').val();
-            var deferred = new $.Deferred();
-
-            // Post the query!
-            var resp = $.ajax({
-                url: "http://localhost:8080/query",
-                contentType: 'application/json',
-                dataType: 'json',
-                type: "POST",
-                data: JSON.stringify({Action: action, Payload: text})
-            });
-
-            // Once we have the Guid, wait 3 seconds for the query to finish
-            // (default server timeout is 2) and query for the results
-            resp.done(function(result){
-                queryResults(result.Guid).done(deferred.resolve);
-            });
-
-            return deferred.promise();
-        };
-
-        var queryResults = function(guid){
-            var deferred = new $.Deferred();
-
-            // After 3 seconds, check our query status
-            // for now, we'll just assume it's done.
-            setTimeout(function(){
-                console.log("checking status!");
-                var final = $.ajax({
-                    url: "http://localhost:8080/query/"+guid,
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    type: "GET"
-                });
-
-                final.done(function(answer){
-                    var answerString = "";
-
-                    // Make some HTML out of the results
-                    answer.forEach(function (a){
-                        answerString = answerString + "Host: " + a.Hostname + "<br/>";
-                        var payload = JSON.parse(a.Payload)["1"];
-                        answerString = answerString + "Package: " + payload.name + "<br/>";
-                        answerString = answerString + "Version: " + payload.version + "<br/>";
-                        answerString = answerString + "<br/><br/>";
-                    })
-                    deferred.resolve(answerString);
-                });
-            }, 3000);
-
-            return deferred.promise();
-        }
-
         // https://github.com/maclennann/jquery-simplevalidator
-        $("#action").simpleValidator("#input", "#output", queryRunner);
+        $("#action").simpleValidator("#input", "#output", dashiell.queryRunner);
     });
     </script>
+
+
+    <a href="https://github.com/maclennann/dashiell"><img class="github-ribbon" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+
 </body>
 </html>
