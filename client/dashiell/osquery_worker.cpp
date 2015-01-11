@@ -20,7 +20,13 @@ namespace dashiell{
         auto sql = osquery::SQL(query);
         if(sql.ok()) {
             boost::property_tree::ptree results_payload;
-            osquery::serializeQueryData(sql.rows(), results_payload);
+            int i = 0;
+            for (const auto& r : sql.rows()) {
+                i++;
+                boost::property_tree::ptree serialized;
+                auto s = osquery::serializeRow(r, serialized);
+                results_payload.push_back(std::make_pair(std::to_string(i), serialized));
+            }
             std::ostringstream os;
             boost::property_tree::write_json(os, results_payload, false);
 

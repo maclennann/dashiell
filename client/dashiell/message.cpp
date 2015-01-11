@@ -6,6 +6,8 @@ namespace dashiell {
         boost::property_tree::ptree message;
         message.add("Action", Action);
         message.add("Payload", Payload);
+        message.add("Guid", Guid);
+        message.add("Hostname", Hostname);
 
         boost::property_tree::write_json(os, message, pretty);
 
@@ -19,5 +21,6 @@ namespace dashiell {
 
         Action = message.get<std::string>("Action", "");
         Payload = message.get<std::string>("Payload", "");
+        Guid = message.get<std::string>("Guid", "");
     }
 }

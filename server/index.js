@@ -1,71 +1,29 @@
 var WebSocketServer = require('ws').Server
 , http = require('http')
 , express = require('express')
-, app = express.createServer();
+, app = express.createServer()
+, bodyParser = require('body-parser')
+, Message = require('./lib/message.js')
+, _ = require('lodash')
+, Status = require('./lib/message_status.js')
+, QueryRouter = require ('./lib/query_router.js');
 
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+var qr = new QueryRouter(app);
+
 app.get('/servers', function(req,res){
     res.send(JSON.stringify(servers.map(function(e){return e["hostname"];})));
 });
 
-app.listen(8080);
+app.post('/query', function(req, res) {
+    var message = new Message(req.body);
+    res.send(message.getStatus());
 
-var servers = [];
-var clients = [];
-
-var wss = new WebSocketServer({server: app});
-wss.on('connection', function(ws) {
-
-    // just immediately re-broadcast any messages we get.
-    ws.on('message', function(message){
-
-        console.log(message);
-
-        var msg = JSON.parse(message);
-        if(msg.Action === "register_server"){
-            servers.push({"hostname": msg.Payload, "connection": ws});
-            console.log("registered server " + msg.Payload);
-
-            return;
-        }
-
-        if(msg.Action === "register_client"){
-            clients.push({"id": msg.Payload, "connection": ws});
-            console.log("registered client");
-
-            return;
-        }
-
-        if(msg.Action === "query" || msg.Action === "fact"){
-            servers.forEach(function(c){
-                c.connection.send(message);
-            });
-
-            console.log("executing query");
-
-            return;
-        }
-
-        if(msg.Action === "response"){
-            clients.forEach(function(c){
-                c.connection.send(message);
-            });
-
-            console.log("query response");
-            return;
-        }
-
-        console.log(message);
-        wss.broadcast(message);
-    });
-
-    ws.on('close', function() {
-        console.log('client disconnect');
-    });
+    qr.addQuery(message);
 });
+app.get('/query/:guid', function(req, res){
+    res.send(qr.checkQuery(req.params.guid));
+})
 
-wss.broadcast = function broadcast(data) {
-    wss.clients.forEach(function each(client) {
-        client.send(data);
-    });
-};
+app.listen(8080);

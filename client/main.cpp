@@ -14,11 +14,13 @@ using namespace dashiell;
 
 // pull out the type of messages sent by our config
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
+std::string hostname;
 
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
+    std::cout << msg->get_payload();
     Message recv, resp;
     recv.fromJson(msg->get_payload());
-    resp = Message(Actions::RESPONSE, "NO ACTION");
+    resp = Message(Actions::RESPONSE, "Error", recv.Guid, hostname);
 
     if(recv.Action == Actions::QUERY){
         OsqueryWorker db;
@@ -37,8 +39,8 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
 void on_connect(client* c, websocketpp::connection_hdl hdl){
     client::connection_ptr con = c->get_con_from_hdl(hdl);
 
-    OsqueryWorker db;
-    Message registration = Message(Actions::REGISTER, db.getHostname());
+
+    Message registration = Message(Actions::REGISTER, "", "", hostname);
     con->send(registration.toJson());
 
     std::cout << "Waiting for queries..." << std::endl;
@@ -51,6 +53,9 @@ void on_disconnect(client* c, websocketpp::connection_hdl hdl){
 int main(int argc, char* argv[]) {
     client c;
     std::string uri = "ws://localhost:8080";
+
+    OsqueryWorker db;
+    hostname = db.getHostname();
 
     try {
         c.clear_access_channels(websocketpp::log::alevel::all);
