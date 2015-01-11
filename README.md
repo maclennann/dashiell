@@ -17,34 +17,23 @@ Eventually, I'd like to turn this into a lightweight inventory management for a 
 ## Want to try it?
 
 ### I just want to try it - no compiling, please (or, I'll be working on the JS)!
-* osquery and dashiell don't have any hosted packages (that I know of) so I have hosted them for your convenience.
-    * Soon enough I hope to have at least a dashiell package on bintray or something.
-* Clone this repo and enter the vagrant box
-    * git clone https://github.com/maclennann/dashiell.git
-    * cd dashiell
-    * vagrant up
-    * vagrant ssh
-* Install cfacter
-    * cd /etc/apt/sources.list.d
-    * sudo wget http://nightlies.puppetlabs.com/cfacter-latest/repo_configs/deb/pl-cfacter-latest-trusty.list
-    * sudo apt-get update
-    * sudo apt-get install cfacter
-* Install osquery
-    * cd /vagrant
-    * wget http://normmaclennan.com/dashiell/osquery-1.2.2-105.deb
-    * sudo dpkg -i ./osquery-1.2.2-105.deb
-* Install dashiell's dependencies
-    * sudo apt-get install install libgflags-dev libgoogle-glog-dev libboost-system1.55 libboost-thread1.55 libboost-filesystem1.55 libboost-random1.55
-* Download a dashiell binary
-    * wget http://normmaclennan.com/dashiell/dashiell-0.1.1
-    * chmod +x ./dashiell-0.1.1
-* Install node.js
-    * sudo apt-get install npm
-    * sudo ln -s /usr/bin/nodejs /usr/bin/node
-* Now you can run it!
-    * Server: `node /vagrant/server/index.js`
-    * Client: `/vagrant/dashiell-0.1.1`
-    * Run these in different terminals:
+I've helpfully provided a vagrant box and a script to get everything up and running, no compiling or
+interaction needed!
+
+Simply check out this repo, `vagrant up`, `vagrant ssh`, and you're ready to go!
+
+Note: This downloads an osquery package and a dashiell build from my webserver, but you can trust me. I promise.
+I am going to move at least the dashiell build onto bintray or something.
+
+* To run it, open a couple terminals and `vagrant ssh` into the box in both!
+    * Server:
+        * cd /vagrant/server
+        * npm install && node index.js
+        * You won't see any output to indicate that the server is running
+    * Client:
+        * `/vagrant/dashiell`
+        * The server will say "registered server" and the client "waiting for queries"
+    * Then try it out!
         * Then browse to `http://192.168.56.20:8080`
         * Click the "Run Query" button and watch results come back
 
