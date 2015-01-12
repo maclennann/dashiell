@@ -1,3 +1,12 @@
+/* query_router.js
+**
+** Handles application state and websocket-y goodness.
+** TODO: Persist server information!
+** TODO: Better error handling
+** TODO: Load test
+**
+*/
+
 var WebSocketServer = require('ws').Server
 , Message = require('./message.js')
 , _ = require('lodash')
@@ -12,15 +21,14 @@ function queryRouter(app){
         ws.on('message', function(message){
             var msg = JSON.parse(message);
             if(msg.Action === "register_server"){
-                me.addServer(msg.Payload, ws);
-                console.log("registered server " + msg.Payload);
+                me.addServer(msg.Hostname, ws);
+                console.log("registered server " + msg.Hostname);
                 return;
             }
 
             if(msg.Action === "response"){
                 me.queries[msg.Guid].addResult(msg);
-                console.log("query response");
-                console.log(msg);
+                console.log("query response from " + msg.Hostname);
                 return;
             }
         });

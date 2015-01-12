@@ -9,6 +9,7 @@ namespace dashiell{
     bool OsqueryWorker::isInit = false;
 
     OsqueryWorker::OsqueryWorker(){
+        // Only load in our osquery info once!
         if(!isInit){
             char* argv[] = {};
             osquery::initOsquery(0,argv);
@@ -17,8 +18,10 @@ namespace dashiell{
     }
 
     std::string OsqueryWorker::runQuery(std::string query) {
+        // Get our QueryData from osQuery
         auto sql = osquery::SQL(query);
         if(sql.ok()) {
+            // Serialize the rows to JSON and return
             boost::property_tree::ptree results_payload;
             int i = 0;
             for (const auto& r : sql.rows()) {

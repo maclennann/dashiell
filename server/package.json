@@ -14,5 +14,8 @@
     "ws": "~0.6.4",
     "body-parser": "~1.10.1",
     "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "sloc": "~0.1.9"
   }
 }

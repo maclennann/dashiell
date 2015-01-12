@@ -1,6 +1,7 @@
 #include <message.h>
 
 namespace dashiell {
+    // Serialize an outgoing message to JSON
     std::string Message::toJson(bool pretty) {
         std::ostringstream os;
         boost::property_tree::ptree message;
@@ -14,6 +15,7 @@ namespace dashiell {
         return os.str();
     }
 
+    // Load an incoming message from JSON
     void Message::fromJson(std::string body){
         std::istringstream instream(body);
         boost::property_tree::ptree message;

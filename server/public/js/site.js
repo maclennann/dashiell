@@ -46,7 +46,7 @@ dashiell.queryResults = function(guid){
     return deferred.promise();
 };
 
-// TODO: Template-ify this. I don't think this works for Facter queries!
+// TODO: Template-ify this. This doesn't work for deep facter responses!
 dashiell.tableResults = function(answer){
     var answerString = "";
 

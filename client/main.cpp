@@ -16,8 +16,8 @@ using namespace dashiell;
 typedef websocketpp::config::asio_client::message_type::ptr message_ptr;
 std::string hostname;
 
+// When the websocket receives a message, respond to an osquery or facter query
 void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
-    std::cout << msg->get_payload();
     Message recv, resp;
     recv.fromJson(msg->get_payload());
     resp = Message(Actions::RESPONSE, "Error", recv.Guid, hostname);
@@ -36,6 +36,7 @@ void on_message(client* c, websocketpp::connection_hdl hdl, message_ptr msg) {
     con->send(resp.toJson());
 }
 
+// Once we have connected to the websocket, register with our hostname
 void on_connect(client* c, websocketpp::connection_hdl hdl){
     client::connection_ptr con = c->get_con_from_hdl(hdl);
 
@@ -51,38 +52,48 @@ void on_disconnect(client* c, websocketpp::connection_hdl hdl){
 }
 
 int main(int argc, char* argv[]) {
-    client c;
     std::string uri = "ws://localhost:8080";
 
     if(argc > 1){
         uri = argv[1];
     }
 
+    // Get and cache our hostname, since we use it to identify ourselves
     OsqueryWorker db;
     hostname = db.getHostname();
 
-    try {
-        c.clear_access_channels(websocketpp::log::alevel::all);
-        c.clear_error_channels(websocketpp::log::elevel::all);
+    do {
+        try {
+            std::cout << "connecting to " << uri << std::endl;
+            client c;
 
-        c.init_asio();
+            c.clear_access_channels(websocketpp::log::alevel::all);
+            c.clear_error_channels(websocketpp::log::elevel::all);
 
-        c.set_open_handler(bind(&on_connect,&c,::_1));
-        c.set_close_handler(bind(&on_disconnect,&c,::_1));
-        c.set_message_handler(bind(&on_message,&c,::_1,::_2));
+            c.init_asio();
 
-        websocketpp::lib::error_code ec;
+            // Register our event handlers for the websocket
+            c.set_open_handler(bind(&on_connect, &c, ::_1));
+            c.set_close_handler(bind(&on_disconnect, &c, ::_1));
+            c.set_message_handler(bind(&on_message, &c, ::_1, ::_2));
 
-        client::connection_ptr con = c.get_connection(uri, ec);
-        c.connect(con);
+            websocketpp::lib::error_code ec;
 
-        c.run();
+            client::connection_ptr con = c.get_connection(uri, ec);
+            c.connect(con);
 
-    } catch (const std::exception & e) {
-        std::cout << e.what() << std::endl;
-    } catch (websocketpp::lib::error_code e) {
-        std::cout << e.message() << std::endl;
-    } catch (...) {
-        std::cout << "other exception" << std::endl;
-    }
+            // Start listening for messages
+            c.run();
+
+        } catch (const std::exception &e) {
+            std::cout << e.what() << std::endl;
+        } catch (websocketpp::lib::error_code e) {
+            std::cout << e.message() << std::endl;
+        } catch (...) {
+            std::cout << "other exception" << std::endl;
+        }
+
+        std::cout << "lost connection to server..." << std::endl << "sleeping for 5 seconds and attempting reconnection..." << std::endl;
+        sleep(5);
+    }while(true);
 }

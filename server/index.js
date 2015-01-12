@@ -1,11 +1,16 @@
-var WebSocketServer = require('ws').Server
-, http = require('http')
-, express = require('express')
+/* index.js
+**
+** Sets up the express server that the websockets piggy-back on
+** as well as the API (used by web ui).
+**
+** TODO: Shore up the API (break it out, and robustify it).
+**
+*/
+
+var express = require('express')
 , app = express.createServer()
 , bodyParser = require('body-parser')
 , Message = require('./lib/message.js')
-, _ = require('lodash')
-, Status = require('./lib/message_status.js')
 , QueryRouter = require ('./lib/query_router.js');
 
 app.use(express.static(__dirname + '/public'));
