@@ -58,3 +58,27 @@ target_link_libraries(dashiell ${READLINE_LIBRARIES})
 target_link_libraries(dashiell ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_THREAD_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${Boost_RANDOM_LIBRARY} ${FACTER} ${APTPKG} ${DPKG}
     ${procps_library})
+
+set(PACKAGE_DEPENDENCIES
+    libgflags-dev
+    libgoogle-glog-dev
+    libboost-system1.55.0
+    libboost-thread1.55.0
+    libboost-filesystem1.55.0
+    libboost-random1.55.0
+    cfacter
+)
+
+function(JOIN VALUES GLUE OUTPUT)
+    string (REPLACE ";" "${GLUE}" _TMP_STR "${VALUES}")
+    set (${OUTPUT} "${_TMP_STR}" PARENT_SCOPE)
+endfunction(JOIN)
+
+JOIN("${PACKAGE_DEPENDENCIES}" ", " PACKAGE_DEPENDENCIES)
+
+add_custom_target(
+    packages
+    ./tools/make_package.sh -d "${PACKAGE_DEPENDENCIES}"
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    COMMENT "Building linux packages (no custom config)" VERBATIM
+)

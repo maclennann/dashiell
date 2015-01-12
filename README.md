@@ -22,8 +22,7 @@ interaction needed!
 
 Simply check out this repo, `vagrant up`, `vagrant ssh`, and you're ready to go!
 
-Note: This downloads an osquery package and a dashiell build from my webserver, but you can trust me. I promise.
-I am going to move at least the dashiell build onto bintray or something.
+It uses the deb for dashiell up [on bintray](https://bintray.com/maclennann/deb/dashiell/view/files). So you can use that manually, too, if you want.
 
 * To run it, open a couple terminals and `vagrant ssh` into the box in both!
     * Server:
@@ -31,7 +30,7 @@ I am going to move at least the dashiell build onto bintray or something.
         * npm install && node index.js
         * You won't see any output to indicate that the server is running
     * Client:
-        * `/vagrant/dashiell`
+        * `dashiell`
         * The server will say "registered server" and the client "waiting for queries"
     * Then try it out!
         * Then browse to `http://192.168.56.20:8080`
