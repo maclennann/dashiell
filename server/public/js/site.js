@@ -37,20 +37,44 @@ dashiell.queryResults = function(guid){
         });
 
         final.done(function(answer){
-            var answerString = "";
-
-            // Make some HTML out of the results
-            answer.forEach(function (a){
-                answerString = answerString + "Host: " + a.Hostname + "<br/>";
-                var payload = JSON.parse(a.Payload)["1"];
-                answerString = answerString + "Package: " + payload.name + "<br/>";
-                answerString = answerString + "Version: " + payload.version + "<br/>";
-                answerString = answerString + "<br/><br/>";
-            });
+            var answerString = dashiell.tableResults(answer);
 
             deferred.resolve(answerString);
         });
     }, 3000);
 
     return deferred.promise();
+};
+
+// TODO: Template-ify this. I don't think this works for Facter queries!
+dashiell.tableResults = function(answer){
+    var answerString = "";
+
+    // Make some HTML out of the results
+    answer.forEach(function (a){
+        var payload = JSON.parse(a.Payload);
+        answerString = answerString + "<table class='table table-striped table-bordered'>";
+        answerString = answerString + "<caption>Host: " + a.Hostname + "</caption>";
+        answerString = answerString + "<thead>";
+        for(var property in payload["1"]){
+            if(payload["1"].hasOwnProperty(property)){
+                answerString = answerString + "<th>" + property + "</th>";
+            }
+        }
+        answerString = answerString + "</thead><tbody>";
+        for(var row in JSON.parse(a.Payload)){
+            var thisRow = payload[row];
+            answerString = answerString + "<tr>";
+            for(var property in thisRow){
+                if(thisRow.hasOwnProperty(property)){
+                    answerString = answerString + "<td>" + thisRow[property] + "</td>";
+                }
+            }
+            answerString = answerString + "</tr>";
+        }
+
+        answerString = answerString + "</tbody></table>";
+    });
+
+    return answerString;
 }

@@ -54,6 +54,10 @@ int main(int argc, char* argv[]) {
     client c;
     std::string uri = "ws://localhost:8080";
 
+    if(argc > 1){
+        uri = argv[1];
+    }
+
     OsqueryWorker db;
     hostname = db.getHostname();
 
