@@ -1,6 +1,6 @@
 {
-  "name": "websocket-server",
-  "version": "0.0.0",
+  "name": "dashiell-server",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
