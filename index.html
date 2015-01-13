@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dashiell - Interrogate Your Servers!">
+    <meta name="author" content="Norm MacLennan">
+
+    <title>Dashiell - Interrogate Your Servers!</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dashiell.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="#page-top">Dashiell.io - Interrogate Your Servers!</a>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="img/profile.png" alt="">
+                    <div class="intro-text">
+                        <br/>
+                        <span class="skills">A Websockets Frontend For Server Interrogation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-lg-push-9">
+                    <h3>Links:</h3>
+                    <ul>
+                        <li><a href="https://github.com/maclennann/dashiell">Dashiell On GitHub</a></li>
+                        <li><a href="https://github.com/maclennann/dashiell/blob/master/README.md#want-to-try-it">Try Dashiell</a></li>
+                        <li><a href="http://en.wikipedia.org/wiki/Dashiell_Hammett">Dashiell Hammet on Wikipedia</a></li>
+                    </ul>
+                    <br/>
+                    <h3>Related Projects:</h3>
+                    <ul>
+                        <li><a href="http://osquery.io">OSQuery</a></li>
+                        <li><a href="https://github.com/puppetlabs/cfacter">Facter</a></li>
+                        <li><a href="http://www.zaphoyd.com/websocketpp">websocketpp</a></li>
+                    </ul>
+                    <br/>
+                    <h3>Contributors:</h3>
+                    <ul>
+                        <li>
+                            Norm MacLennan
+                            <ul>
+                                <li><a href="http://blog.normmaclennan.com">blog.normmaclennan.com</a></li>
+                                <li><a href="http://twitter.com/nromdotcom">@nromdotcom</a></li>
+                                <li><a href="http://github.com/maclennann">github</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-lg-pull-3">
+                    <div class="">
+                        <div class="">
+                            <div class="col-lg-12">
+                                <h2>Dashiell?</h2><br/>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="col-lg-8">
+                                <p>
+                                    Dashiell is a websockets frontend for server interrogation.
+                                    <br/><br/>
+                                    It allows a system administrator to easily interrogate a fleet of servers
+                                    for any kind of information and aggregate it all in one place.
+                                </p>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="thumbnail">
+                                    <a href="img/diagram.png" target=_new>
+                                        <img src="img/diagram-thumb.png" border=1px/>
+                                    </a>
+                                    <div class="caption">Distribute queries to your servers</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="col-lg-12">
+                                <p>
+                                    The <mono>dashiell-client</mono> runs on each server in your fleet.
+                                    It is written entirely in C++ and is based on great open source
+                                    applications like <a href="http://osquery.io">osquery</a> and
+                                    <a href="https://github.com/puppetlabs/cfacter">cfacter</a>, so
+                                    it is designed to have a small footprint and not impact your
+                                    servers' performance.
+                                </p>
+                                <p>
+                                    The <mono>dashiell-server</mono> is a nodejs webserver that must
+                                    run on its own server. This provides a lightweight website with
+                                    an API for querying each of your agents, as well as running the
+                                    websockets server used to communicate with your agents.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="col-lg-12">
+                                <h3>How does it work?</h3>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="col-lg-4">
+                                <div class="thumbnail">
+                                    <a href="img/demo.gif" target=_new>
+                                        <img src="img/demo-thumb.png" border=1px/>
+                                    </a>
+                                    <div class="caption">Query your servers from the comfort of your browser</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <p>
+                                    See the diagram above or the demo below.
+                                    <br/><br/>
+                                    You, the end user, can use the web application or use the API
+                                    directly. You can make osquery queries or lookup facts in facter.
+                                    <br/><br/>
+                                    Queries are distributed to the agents via websocket by dashiell-server.
+                                    Results are aggregated and made available to the user via the API and
+                                    web applications.
+                                    <br/><br/>
+                                    Future versions will provide scheduled queries, result persistence, and
+                                    other features with the addition of a reporting database. Eventually,
+                                    Dashiell will be able to be used as a lightweight inventory management
+                                    system.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Norm MacLennan 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
