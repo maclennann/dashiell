@@ -44,6 +44,7 @@ message.prototype = {
         };
     },
     addResult: function(result){
+        result.Payload = JSON.parse(result.Payload);
         this.Results.push(result);
     },
     getResults: function(){

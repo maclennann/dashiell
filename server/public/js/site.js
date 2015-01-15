@@ -1,8 +1,11 @@
 var dashiell = dashiell || {};
 
-dashiell.queryRunner = function(text) {
-    var action = $('input[name=qtype]:checked').val();
+dashiell.queryRunner = function(text, e) {
+    var action = $(e.target).attr("data-query-engine")
     var deferred = new $.Deferred();
+
+    var spinner = new $.simpleValidator.ui.spinningButton('#run-with');
+    spinner.spinButton();
 
     // Post the query!
     var resp = $.ajax({
@@ -16,7 +19,10 @@ dashiell.queryRunner = function(text) {
     // Once we have the Guid, wait 3 seconds for the query to finish
     // (default server timeout is 2) and query for the results
     resp.done(function(result){
-        dashiell.queryResults(result.Guid).done(deferred.resolve);
+        dashiell.queryResults(result.Guid).done(function(data){
+            deferred.resolve(data);
+            spinner.stopButton();
+        });
     });
 
     return deferred.promise();
@@ -52,7 +58,7 @@ dashiell.tableResults = function(answer){
 
     // Make some HTML out of the results
     answer.forEach(function (a){
-        var payload = JSON.parse(a.Payload);
+        var payload = a.Payload;
         answerString = answerString + "<table class='table table-striped table-bordered'>";
         answerString = answerString + "<caption>Host: " + a.Hostname + "</caption>";
         answerString = answerString + "<thead>";
@@ -62,7 +68,7 @@ dashiell.tableResults = function(answer){
             }
         }
         answerString = answerString + "</thead><tbody>";
-        for(var row in JSON.parse(a.Payload)){
+        for(var row in payload){
             var thisRow = payload[row];
             answerString = answerString + "<tr>";
             for(var property in thisRow){

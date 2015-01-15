@@ -1,67 +1,63 @@
 <html>
 <head>
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.rawgit.com/maclennann/jquery-simplevalidator/ea06b7a8b939173722808021d12a05aa6dbc9404/jquery-simplevalidator.js"></script>
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet">
-    <script src="js/site.js"></script>
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container" style="margin-left:20px">
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="images/dashiell.png" height=50px style="float:left;margin-top:-14px"/>&nbsp;&nbsp;Dashiell</a>
+                <a class="navbar-brand" href="#"><img src="images/dashiell.png"/>Dashiell</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-
             </div>
         </div>
     </nav>
 
-
-
-    <section id="demo" style="margin-top:50px">
+    <section id="demo">
         <div class=container>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3>Run a Query</h3>
-                    Query: <input id="input" type="text" value="select name, version from deb_packages where name='bash'" style="width:500px" /><br/>
-                    Query Type: <input type="radio" name="qtype" id="query" value="query" checked="checked"/>OsQuery
-                    <input type="radio" name="qtype" id="fact" value="fact"/>Fact<br/>
-                    <button id="action" type="submit">Run Query </button>
+            <div class="row" >
+                <div class="col-lg-12 well">
+                    <h2>Run a Query</h2>
+                    <div class="input-group">
+                        <span class="input-group-addon">Query:</span>
+                        <input type="text" class="form-control" aria-label="..." id="input" placeholder="select name, version from deb_packages where name='bash'">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="run-with">
+                                Run With... <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="#" class="run-query" data-query-engine="query">OSQuery </a></li>
+                                <li><a href="#" class="run-query" data-query-engine="fact">Facter </a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
                 </div>
             </div>
-            <div class="row"
-                <div class="col-lg-6" style="margin-top:50px">
+
+            <div class="row">
+                <div class="col-lg-12">
                     <span id="output"></span>
                 </div>
             </div>
         </div>
     </section>
 
-
-
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="js/jquery-simplevalidator.js"></script>
+    <script src="js/site.js"></script>
 
     <script type="text/javascript">
     $(function() {
-        // https://github.com/maclennann/jquery-simplevalidator
-        $("#action").simpleValidator("#input", "#output", dashiell.queryRunner);
+        $(".run-query").simpleValidator("#input", "#output", dashiell.queryRunner);
     });
     </script>
 
-
-    <a href="https://github.com/maclennann/dashiell"><img class="github-ribbon" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
-
+    <a href="https://github.com/maclennann/dashiell"><img class="github-ribbon"
+       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+       alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body>
 </html>
