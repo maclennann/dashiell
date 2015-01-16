@@ -1,23 +1,23 @@
 body {
     overflow-x: hidden;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 p {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 p.small {
     font-size: 16px;
 }
 
-a,a:hover,a:focus,a:active,a.active {
-    outline: 0;
-    color: #1A1A59;
+a:hover,a:focus,a:active,a.active {
+    color: #343838;
+    text-decoration: none;
 }
 
 h1,h2,h3,h4,h5,h6 {
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
 
@@ -25,10 +25,19 @@ h1,h2,h3,h4,h5,h6 {
     margin: 0 auto;
 }
 
+.heading {
+    padding: 15px 0px;
+}
+
+.diagram {
+    text-align: center;
+    padding: 15px 0px;
+}
+
 header {
     text-align: center;
     color: #FFFFFF;
-    background: #27244A;
+    background: #005F6B;
 }
 
 header .container {
@@ -41,10 +50,13 @@ header img {
     margin: 0 auto 0px;
 }
 
+header .intro-text {
+    padding: 10px;
+}
+
 header .intro-text .name {
     display: block;
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 15em;
     font-weight: 600;
 }
@@ -93,14 +105,19 @@ header .intro-text .skills {
     }
 }
 
+.navbar-default {
+    border: 0px;
+}
+
 .navbar {
     text-transform: uppercase;
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #343838;
     font-weight: 700;
 }
 
 section {
-    padding: 100px 0;
+    padding-top: 25px;
+    padding-bottom: 10px;
 }
 
 section h2 {
@@ -129,5 +146,5 @@ footer {
 }
 footer .footer-below {
     padding: 25px 0;
-    background-color: #27244A;
+    background-color: #005F6B;
 }
