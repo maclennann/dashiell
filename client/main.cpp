@@ -52,7 +52,7 @@ void on_disconnect(client* c, websocketpp::connection_hdl hdl){
 }
 
 int main(int argc, char* argv[]) {
-    std::string uri = "ws://localhost:8080";
+    std::string uri = "ws://localhost:8080/agent";
 
     if(argc > 1){
         uri = argv[1];

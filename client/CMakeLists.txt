@@ -27,10 +27,11 @@ set(SOURCE_FILES main.cpp
 add_executable(dashiell ${SOURCE_FILES})
 include_directories(AFTER ${CMAKE_SOURCE_DIR}/third-party /usr/local/includes ${CMAKE_SOURCE_DIR}/include)
 
+set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost COMPONENTS system thread random filesystem REQUIRED)
 find_package(Threads REQUIRED)
 
-find_library(procps_library NAMES libprocps.a procps)
+find_library(procps_library NAMES libprocps.a procps REQUIRED)
 
 find_library(FACTER NAMES facter PATHS /usr/local/lib REQUIRED)
 find_library(APTPKG NAMES apt-pkg PATHS /usr/lib REQUIRED)
@@ -40,19 +41,19 @@ find_package(LibOsQuery REQUIRED)
 include_directories(${LIBOSQUERY_INCLUDE_DIR})
 target_link_libraries(dashiell ${LIBOSQUERY_LIBRARY_RELEASE})
 
-find_package(Glog)
+find_package(Glog REQUIRED)
 target_link_libraries(dashiell ${GLOG_LIBRARIES})
-find_package(Gflags)
+find_package(Gflags REQUIRED)
 target_link_libraries(dashiell ${GFLAGS_LIBRARIES})
-find_package(Dl)
+find_package(Dl REQUIRED)
 target_link_libraries(dashiell ${DL_LIBRARIES})
 find_package(Gtest REQUIRED)
 target_link_libraries(dashiell ${Gtest_LIBRARIES})
-find_package(RocksDB)
+find_package(RocksDB REQUIRED)
 target_link_libraries(dashiell ${ROCKSDB_LIBRARIES})
-find_package(BZip2)
+find_package(BZip2 REQUIRED)
 target_link_libraries(dashiell ${BZIP2_LIBRARIES})
-find_package(Readline)
+find_package(Readline REQUIRED)
 target_link_libraries(dashiell ${READLINE_LIBRARIES})
 
 target_link_libraries(dashiell ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY}
@@ -60,12 +61,7 @@ target_link_libraries(dashiell ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRAR
     ${procps_library})
 
 set(PACKAGE_DEPENDENCIES
-    libgflags-dev
-    libgoogle-glog-dev
-    libboost-system1.55.0
-    libboost-thread1.55.0
-    libboost-filesystem1.55.0
-    libboost-random1.55.0
+    libgoogle-glog0
     cfacter
 )
 
