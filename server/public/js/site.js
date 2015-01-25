@@ -6,6 +6,7 @@ dashiell.queryRunner = function(text, e) {
 
     var spinner = new $.simpleValidator.ui.spinningButton('#run-with');
     spinner.spinButton();
+    $(".dropdown-menu>li").addClass("disabled");
 
     // Post the query!
     var resp = $.ajax({
@@ -22,6 +23,7 @@ dashiell.queryRunner = function(text, e) {
         dashiell.queryResults(result.Guid).done(function(data){
             deferred.resolve(data);
             spinner.stopButton();
+            $(".dropdown-menu>li").removeClass("disabled");
         });
     });
 

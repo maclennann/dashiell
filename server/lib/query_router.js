@@ -15,7 +15,7 @@ var WebSocketServer = require('ws').Server
 function queryRouter(app){
     var me = queryRouter.prototype;
 
-    me.wss = new WebSocketServer({server: app});
+    me.wss = new WebSocketServer({server: app, path: "/agent"});
 
     me.wss.on('connection', function(ws) {
         ws.on('message', function(message){
