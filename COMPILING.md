@@ -1,3 +1,7 @@
+### STOP
+
+This doesn't seem to work with newer versions of OSQUERY. I'm investigating what changed in the past month to break it, but due to my spotty knowledge of c++, it may take some time/luck/help.
+
 #### Make the dashiell-client
 * git clone https://github.com/maclennann/dashiell.git
 * cd dashiell
